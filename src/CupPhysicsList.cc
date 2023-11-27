@@ -498,6 +498,9 @@ void CupPhysicsList::ConstructOp() {
 #include "G4PionPlusInelasticProcess.hh"
 #include "G4ProtonInelasticProcess.hh"
 #include "G4TritonInelasticProcess.hh"
+#include "G4ChipsKaonPlusInelasticXS.hh"
+#include "G4ChipsKaonZeroInelasticXS.hh"
+#include "G4ChipsKaonMinusInelasticXS.hh"
 
 // High energy FTFP model and Bertini cascade
 #include "G4CascadeInterface.hh"
