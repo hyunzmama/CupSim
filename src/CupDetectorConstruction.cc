@@ -280,7 +280,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the PC
     Dodecane->SetMaterialPropertiesTable(MPT);
 
@@ -303,7 +303,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the pseudocumene
     Pseudocumene->SetMaterialPropertiesTable(MPT);
 
@@ -332,7 +332,7 @@ void CupDetectorConstruction::ConstructMaterials() {
         // Allocate memory for a new Material Property Table
         MPT = new G4MaterialPropertiesTable();
         // Fill with the molecular weight
-        MPT->AddConstProperty("MOL", mol / g);
+        MPT->AddConstProperty("MOL", mol / g, true);
         // Attach this MPT to the pseudocumene
         LAB[i]->SetMaterialPropertiesTable(MPT);
     }
@@ -356,7 +356,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the PXE
     PXE->SetMaterialPropertiesTable(MPT);
 
@@ -382,7 +382,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the PC
     PPO->SetMaterialPropertiesTable(MPT);
 
@@ -409,7 +409,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the PC
     BPO->SetMaterialPropertiesTable(MPT);
 
@@ -433,7 +433,7 @@ void CupDetectorConstruction::ConstructMaterials() {
     // Allocate memory for a new Material Property Table
     MPT = new G4MaterialPropertiesTable();
     // Fill with the molecular weight
-    MPT->AddConstProperty("MOL", mol / g);
+    MPT->AddConstProperty("MOL", mol / g, true);
     // Attach this MPT to the Bis-MSB
     BisMSB->SetMaterialPropertiesTable(MPT);
 
@@ -645,12 +645,23 @@ void CupDetectorConstruction::ConstructMaterials() {
         else
             G4cerr << "I was looking for materials.dat in the CupDATA directory, "
                    << getenv("CupDATA") << G4endl;
-        // G4Exception("Error, material properties file could not be opened.\n");
         G4Exception(" ", " ", JustWarning,
                     "Error, material properties file could not be opened.\n");
     }
+
+    /* EJ test 
+    std::string str;
+    //char str[1000];
+    while(!ifs.eof()) {
+            //ifs.getline(str, 100);
+            std::getline(ifs, str);
+            G4cout << "str= " << str << G4endl;
+    }
+    */
+
     // now read materials, keeping error count
     int errorCount_ReadMaterials = CupInputDataReader::ReadMaterials(ifs);
+
     // close file
     ifs.close();
 

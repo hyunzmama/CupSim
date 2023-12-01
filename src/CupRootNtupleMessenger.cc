@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////
+// CupRootNtupleMessenger
+////////////////////////////////////////////////////////////////
 
 #include "CupSim/CupRootNtupleMessenger.hh"
 #include "CupSim/CupRootNtuple.hh"
@@ -162,15 +165,15 @@ void CupRootNtupleMessenger::SetNewValue(G4UIcommand *command, G4String newValue
 G4String CupRootNtupleMessenger::GetCurrentValue(G4UIcommand *command) {
     // CalDeviceCmd
     if (command == NtupleTrack) {
-        return myNtuple->GetNtupleTrackStatus();
+        return std::to_string(myNtuple->GetNtupleTrackStatus());
     } else if (command == NtupleStep) {
-        return myNtuple->GetNtupleStepStatus();
+        return std::to_string(myNtuple->GetNtupleStepStatus());
     } else if (command == NtuplePhoton) {
-        return myNtuple->GetNtuplePhotonStatus();
+        return std::to_string(myNtuple->GetNtuplePhotonStatus());
     } else if (command == NtupleScint) {
-        return myNtuple->GetNtupleScintStatus();
+        return std::to_string(myNtuple->GetNtupleScintStatus());
     } else if (command == NtupleMuon) {
-        return myNtuple->GetNtupleMuonStatus();
+        return std::to_string(myNtuple->GetNtupleMuonStatus());
     }
     // invalid command
     else {

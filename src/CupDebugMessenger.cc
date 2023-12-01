@@ -1,4 +1,3 @@
-
 #include "CupSim/CupDebugMessenger.hh"
 #include "CupSim/CupDetectorConstruction.hh"
 
@@ -17,11 +16,10 @@
 #include "G4PhysicalVolumeStore.hh"
 #include "G4SolidStore.hh"
 
-#include "G4HadronCaptureProcess.hh"
+#include "G4NeutronCaptureProcess.hh"
 #include "G4HadronElasticProcess.hh"
-#include "G4HadronFissionProcess.hh"
+#include "G4NeutronFissionProcess.hh"
 #include "G4HadronInelasticProcess.hh"
-#include "G4NeutronInelasticProcess.hh"
 #include "G4ProcessTable.hh"
 
 #include "G4RunManager.hh"

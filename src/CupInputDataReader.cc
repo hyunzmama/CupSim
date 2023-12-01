@@ -1,8 +1,10 @@
-
 #include "CupSim/CupInputDataReader.hh"
 #include "G4Material.hh"
 #include "G4MaterialPropertiesTable.hh"
 #include <ctype.h>
+
+#include <iostream>
+using namespace std;
 
 int CupInputDataReader::ReadMaterials(std::istream &is) {
     static const char funcname[] = "CupSim/CupInputDataReader::ReadMaterials";
@@ -15,8 +17,18 @@ int CupInputDataReader::ReadMaterials(std::istream &is) {
     int wavelength_opt = 0;
     int errorCount     = 0;
 
+    /*
+    char str[1000];
+    while(!is.eof()) {
+            //ifs.getline(str, 100);
+            std::getline(is, str);
+            G4cout << "str= " << str << G4endl;
+    }
+    */
+
     while (t.nextToken() != MyTokenizer::TT_EOF) {
 
+        //G4cout << "EJ test1 sval= " << t.sval << G4endl;
         // expect either a pair of numbers or a keyword
         if (t.ttype == MyTokenizer::TT_STRING) {
             if (t.sval == "MATERIAL") {
@@ -43,10 +55,12 @@ int CupInputDataReader::ReadMaterials(std::istream &is) {
                     currentPV      = NULL;
                     wavelength_opt = 0;
                     if (currentMPT != NULL) {
-                        currentPV = currentMPT->GetProperty((char *)(const char *)(t.sval));
+                        //currentPV = currentMPT->GetProperty((char *)(const char *)(t.sval));
+                        currentPV = currentMPT->GetProperty((const char *)(t.sval));
                         if (currentPV == NULL) {
                             currentPV = new G4MaterialPropertyVector();
-                            currentMPT->AddProperty((char *)(const char *)(t.sval), currentPV);
+                            //currentMPT->AddProperty((char *)(const char *)(t.sval), currentPV);
+                            currentMPT->AddProperty((const char *)(t.sval), currentPV, true);
                         }
                     }
                 } else {
@@ -55,11 +69,12 @@ int CupInputDataReader::ReadMaterials(std::istream &is) {
                 }
             } else if (t.sval == "CONSTPROPERTY") {
                 if (t.nextToken() == MyTokenizer::TT_STRING) {
-                    G4String cosntpropertyname = t.sval;
+                    const G4String cosntpropertyname = t.sval;
                     if (t.nextToken() == MyTokenizer::TT_NUMBER) {
                         G4double constval = t.nval;
                         if (currentMPT != NULL)
-                            currentMPT->AddConstProperty((char *)(const char *)(t.sval), constval);
+                            //currentMPT->AddConstProperty((char *)(const char *)(t.sval), constval);
+                            currentMPT->AddConstProperty((const char *)(t.sval), constval, true);
                     } else {
                         G4cerr << funcname << " expected number for CONSTPROPERTY\n";
                         errorCount++;
@@ -171,11 +186,15 @@ int CupInputDataReader::MyTokenizer::nextToken(void) {
             i = isptr->get();
             while (i == '\\') {
                 i = isptr->get();
-                sval.append((char)i);
+                //sval.append((char)i);
+                string istr = string(1, (char)i);
+                sval.append(istr);
                 i = isptr->get();
             }
             if (i == EOF || i == '"') break;
-            sval.append((char)i);
+            //sval.append((char)i);
+            string istr = string(1, (char)i);
+            sval.append(istr);
         }
         return (ttype = TT_STRING);
     } else {

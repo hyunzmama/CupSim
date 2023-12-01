@@ -1,3 +1,8 @@
+//
+//  Original by G. Horton-Smith, 12/27/1999
+//
+//   4/24/01: add PMT optical model to "fake" PMT on MLCS
+//
 
 #include "globals.hh"
 
@@ -36,7 +41,7 @@ void CupDetectorConstruction::ConstructTestBench() {
     G4double bounding_size    = 20. * meter / 2.0;
     G4Box *boxHall            = new G4Box("hallbox", bounding_size, bounding_size, bounding_size);
     G4LogicalVolume *logiHall = new G4LogicalVolume(boxHall, _air, "logiHall", 0, 0, 0);
-    logiHall->SetVisAttributes(G4VisAttributes::Invisible);
+    logiHall->SetVisAttributes(G4VisAttributes::GetInvisible);
 
     G4VPhysicalVolume *physHall =
         new G4PVPlacement(/*rotation*/ 0, G4ThreeVector(0, 0, 0), logiHall, "physHall",
@@ -123,7 +128,7 @@ void CupDetectorConstruction::ConstructTestBench() {
                               logiHall,        // mother logical vol
                               false,           // no boolean ops
                               0);              // copy number
-        logi_MLCS_box->SetVisAttributes(G4VisAttributes::Invisible);
+        logi_MLCS_box->SetVisAttributes(G4VisAttributes::GetInvisible);
 
         // make the tube of scintillator
         G4LogicalVolume *logi_MLCS_scinti =
@@ -143,7 +148,7 @@ void CupDetectorConstruction::ConstructTestBench() {
         CupScintSD *TGSD;
         G4SDManager *SDman = G4SDManager::GetSDMpointer();
         G4String SDname;
-        TGSD = new CupScintSD(SDname = "/cupdet/TGSD", 1);
+        TGSD = new CupScintSD(SDname = "/CupDet/TGSD", 1);
         SDman->AddNewDetector(TGSD);
         logi_MLCS_scinti->SetSensitiveDetector(TGSD);
 
@@ -257,11 +262,13 @@ void CupDetectorConstruction::ConstructTestBench() {
                 new G4PVPlacement(0, // no rotation
                                   G4ThreeVector(0., 0., imask * 400. * mm),
                                   logi_MLCS_mask, // logical vol
-                                  G4String("MLCS_mask_phys_") + G4String('A' + imask + 8), // name
+                                  //G4String("MLCS_mask_phys_") + G4String('A' + imask + 8), // name
+                                  "MLCS_mask_phys_" + 'A' + imask + 8, // name
                                   logi_MLCS_scinti, // mother logical vol
                                   false,            // no boolean ops
                                   0);               // copy number
-            new G4LogicalBorderSurface(G4String("MLCS_mask_logsurf_") + G4String('A' + imask + 8),
+            new G4LogicalBorderSurface(//G4String("MLCS_mask_logsurf_") + G4String('A' + imask + 8),
+					"MLCS_mask_logsurf_" + 'A' + imask + 8,
                                        phys_MLCS_scinti, phys_MLCS_mask, BlackSheet_opsurf);
         }
     }
@@ -303,7 +310,7 @@ void CupDetectorConstruction::ConstructTestBench() {
         G4double box_size                = 2000. * millimeter / 2.0;
         G4LogicalVolume *logi_schmoo_box = new G4LogicalVolume(
             new G4Box("schmoo_box", box_size, box_size, box_size), _air, "schmoo_box_log", 0, 0, 0);
-        logi_schmoo_box->SetVisAttributes(G4VisAttributes::Invisible);
+        logi_schmoo_box->SetVisAttributes(G4VisAttributes::GetInvisible);
         G4VPhysicalVolume *phys_schmoo_box = new G4PVPlacement(0, // no rotation
                                                                G4ThreeVector(5.0 * m, -5.0 * m, 0.),
                                                                logi_schmoo_box,   // logical vol

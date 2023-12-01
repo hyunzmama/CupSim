@@ -158,9 +158,9 @@ G4VParticleChange *CupScintillation::PostStepDoIt(const G4Track &aTrack, const G
     if (!aMaterialPropertiesTable) return G4VRestDiscreteProcess::PostStepDoIt(aTrack, aStep);
 
     G4MaterialPropertyVector *Fast_Intensity =
-        aMaterialPropertiesTable->GetProperty("FASTCOMPONENT");
+        aMaterialPropertiesTable->GetProperty("SCINTILLATIONCOMPONENT1");
     G4MaterialPropertyVector *Slow_Intensity =
-        aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+        aMaterialPropertiesTable->GetProperty("SCINTILLATIONCOMPONENT2");
 
     if (!Fast_Intensity && !Slow_Intensity)
         return G4VRestDiscreteProcess::PostStepDoIt(aTrack, aStep);
@@ -359,7 +359,7 @@ G4VParticleChange *CupScintillation::PostStepDoIt(const G4Track &aTrack, const G
             if (nscnt == 1) {
                 if (Fast_Intensity) {
                     ScintillationTime =
-                        aMaterialPropertiesTable->GetConstProperty("FASTTIMECONSTANT");
+                        aMaterialPropertiesTable->GetConstProperty("SCINTILLATIONTIMECONSTANT1");
                     if (fFiniteRiseTime) {
                         ScintillationRiseTime =
                             aMaterialPropertiesTable->GetConstProperty("FASTSCINTILLATIONRISETIME");
@@ -378,13 +378,13 @@ G4VParticleChange *CupScintillation::PostStepDoIt(const G4Track &aTrack, const G
                         (G4PhysicsOrderedFreeVector *)((*theSlowIntegralTable)(materialIndex));
                 }
             } else {
-                G4double YieldRatio = aMaterialPropertiesTable->GetConstProperty("YIELDRATIO");
+                G4double YieldRatio = aMaterialPropertiesTable->GetConstProperty("SCINTILLATIONYIELD1");
                 if (ExcitationRatio == 1.0) {
                     Num = G4int(std::min(YieldRatio, 1.0) * NumPhotons);
                 } else {
                     Num = G4int(std::min(ExcitationRatio, 1.0) * NumPhotons);
                 }
-                ScintillationTime = aMaterialPropertiesTable->GetConstProperty("FASTTIMECONSTANT");
+                ScintillationTime = aMaterialPropertiesTable->GetConstProperty("SCINTILLATIONTIMECONSTANT1");
                 if (fFiniteRiseTime) {
                     ScintillationRiseTime =
                         aMaterialPropertiesTable->GetConstProperty("FASTSCINTILLATIONRISETIME");
@@ -542,7 +542,7 @@ void CupScintillation::BuildThePhysicsTable() {
         if (aMaterialPropertiesTable) {
 
             G4MaterialPropertyVector *theFastLightVector =
-                aMaterialPropertiesTable->GetProperty("FASTCOMPONENT");
+                aMaterialPropertiesTable->GetProperty("SCINTILLATIONCOMPONENT1");
 
             if (theFastLightVector) {
 
@@ -589,7 +589,7 @@ void CupScintillation::BuildThePhysicsTable() {
             }
 
             G4MaterialPropertyVector *theSlowLightVector =
-                aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+                aMaterialPropertiesTable->GetProperty("SCINTILLATIONCOMPONENT2");
 
             if (theSlowLightVector) {
 

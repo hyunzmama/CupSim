@@ -4,6 +4,7 @@
 #include "G4Version.hh"
 #include "G4LogicalBorderSurface.hh"
 #include "G4MaterialPropertiesTable.hh"
+#include "G4OpticalMaterialProperties.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4OpticalSurface.hh"
 #include "G4TransportationManager.hh"
@@ -18,6 +19,9 @@
 #include "G4VProcess.hh" 
 
 #include "G4GeometryTolerance.hh" // for kCarTolerance
+
+using namespace std;
+using namespace CLHEP;
 
 G4UIdirectory *CupPMTOpticalModel::fgCmdDir = NULL;
 

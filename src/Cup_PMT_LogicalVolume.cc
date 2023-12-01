@@ -8,7 +8,10 @@
 #include "G4OpticalSurface.hh"
 #include "G4PVPlacement.hh"
 #include "G4Tubs.hh"
-#include "G4VisAttributes.hh" // for G4VisAttributes::Invisible
+#include "G4VisAttributes.hh" // for G4VisAttributes::GetInvisible
+
+using namespace std;
+using namespace CLHEP;
 
 G4OpticalSurface *Cup_PMT_LogicalVolume::our_Mirror_opsurf = NULL;
 
@@ -38,7 +41,7 @@ Cup_PMT_LogicalVolume::Cup_PMT_LogicalVolume(
                       "material properties defined"
                    << G4endl;
             propMirror = new G4MaterialPropertiesTable();
-            propMirror->AddProperty("REFLECTIVITY", new G4MaterialPropertyVector());
+            propMirror->AddProperty("REFLECTIVITY", new G4MaterialPropertyVector(), true);
             propMirror->AddEntry("REFLECTIVITY", twopi * hbarc / (800.0e-9 * m), 0.9999);
             propMirror->AddEntry("REFLECTIVITY", twopi * hbarc / (200.0e-9 * m), 0.9999);
         }
@@ -766,19 +769,21 @@ void Cup_PMT_LogicalVolume::ConstructPMT_UsingTorusStack(
     // FastSimulationModel
     ////
     /**  CupPMTOpticalModel * pmtOpticalModel =  **/
+    // EJ: start
     G4Region *PmtRegion = new G4Region(GetName());
     PmtRegion->AddRootLogicalVolume(body_log);
+    // EJ: end
     new CupPMTOpticalModel(GetName() + "_optical_model", body_phys);
 
     ////////////////////////////////////////////////////////////////
     // Set colors and visibility
     ////
     G4VisAttributes *visAtt;
-    this->SetVisAttributes(G4VisAttributes::Invisible);
+    this->SetVisAttributes(G4VisAttributes::GetInvisible);
     // PMT glass
     // visAtt= new G4VisAttributes(G4Color(0.0,1.0,1.0,0.05));
     // body_log->SetVisAttributes( visAtt );
-    body_log->SetVisAttributes(G4VisAttributes::Invisible);
+    body_log->SetVisAttributes(G4VisAttributes::GetInvisible);
     // dynode is medium gray
     visAtt = new G4VisAttributes(G4Color(0.5, 0.5, 0.5, 1.0));
     dynode_log->SetVisAttributes(visAtt);
@@ -985,7 +990,7 @@ void Cup_PMT_LogicalVolume::ConstructPMT_UsingEllipsoid(
     ////////////////////////////////////////////////////////////////
     // Set colors and visibility
     ////
-    this->SetVisAttributes(G4VisAttributes::Invisible);
+    this->SetVisAttributes(G4VisAttributes::GetInvisible);
     // top PMT glass is very clear orangish-gray
     G4VisAttributes *visAtt = new G4VisAttributes(G4Color(0.7, 0.5, 0.3, 0.27));
     face_log->SetVisAttributes(visAtt);
@@ -998,7 +1003,7 @@ void Cup_PMT_LogicalVolume::ConstructPMT_UsingEllipsoid(
     if (dynode1_log) dynode1_log->SetVisAttributes(visAtt);
     dynode2_log->SetVisAttributes(visAtt);
     // interior vacuum is invisible
-    back_interior_log->SetVisAttributes(G4VisAttributes::Invisible);
-    stem_interior_log->SetVisAttributes(G4VisAttributes::Invisible);
-    face_interior_log->SetVisAttributes(G4VisAttributes::Invisible);
+    back_interior_log->SetVisAttributes(G4VisAttributes::GetInvisible);
+    stem_interior_log->SetVisAttributes(G4VisAttributes::GetInvisible);
+    face_interior_log->SetVisAttributes(G4VisAttributes::GetInvisible);
 }
