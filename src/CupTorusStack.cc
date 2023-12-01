@@ -1361,11 +1361,6 @@ CupPolyhedronTorusStack::CupPolyhedronTorusStack(const G4int n, const G4double z
                                                  const G4double inner_a[], const G4double inner_b[])
 /***********************************************************************
  *                                                                     *
- * Name: CupPolyhedronTorusStack                                      *
- * Author: G.Horton-Smith (Tohoku)                 Revised: 1999.11.11 *
- *                                                                     *
- * Function: Constructor of polyhedron for   TorusStack                *
- *                                                                     *
  * Input: n        - number of segments                                *
  *        z_edge   - n+1 edges of Z-segments                           *
  *        rho_edge - n+1 dist. from Z-axis                             *

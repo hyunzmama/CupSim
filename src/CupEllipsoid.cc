@@ -563,11 +563,6 @@ CupPolyhedronEllipsoid::CupPolyhedronEllipsoid(G4double rx, G4double ry, G4doubl
                                                G4double ZCut1, G4double ZCut2)
 /***********************************************************************
  *                                                                     *
- * Name: CupPolyhedronEllipsoid                                       *
- * Author: G.Horton-Smith (Tohoku)         Revised: 1999.11.11         *
- *                                                                     *
- * Function: Constructor of polyhedron for   Ellipsoid                 *
- *                                                                     *
  * Input: rx   - x "radius"                                            *
  *        ry   - y "radius"                                            *
  *        rz   - z "radius"                                            *

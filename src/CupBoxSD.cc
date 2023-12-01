@@ -88,7 +88,6 @@ void CupBoxSD::clear() {}
 
 void CupBoxSD::DrawAll() {}
 
-// following routine is borrowed from test_radondaq by G. Horton-Smith
 // it dumps histograms in "non-repeating-zeroes" format
 template <class T>
 static void dump_histo(T *hist, int hlength, int xmin) {
